@@ -5,7 +5,9 @@ A test project for automating Chrome browser using the **Chrome DevTools MCP (Mo
 ---
 
 ### 專案簡介
-本專案演示如何透過 MCP 協議與 Chrome DevTools 進行互動，實現瀏覽器的自動化控制。目前包含 `youtube_mcp_control.py`，可用於導航至 YouTube 並分析影片標題。
+本專案演示如何透過 MCP 協議與 Chrome DevTools 進行互動，實現瀏覽器的自動化控制。包含以下腳本：
+- **`youtube_mcp_control.py`**：使用 MCP 協議導航至 YouTube 並分析影片標題
+- **`cdp_connect_existing.py`**：純 CDP WebSocket 連線，不依賴 MCP 伺服器
 
 > [!NOTE]
 > 本專案為純腳本自動化示範，**不需要 AI 模型或 AI 代理程式**即可獨立運行。
@@ -18,6 +20,15 @@ A test project for automating Chrome browser using the **Chrome DevTools MCP (Mo
 5. **資料解析**：使用 `BeautifulSoup` 分析網頁結構。
 6. **標題提取**：精準定位並提取首頁影片清單中的影片標題。
 7. **結果輸出**：將分析出的標題條列印在終端機視窗中。
+
+**`cdp_connect_existing.py` 示範流程：**
+1. **讀取連線資訊**：從 Chrome 的 `DevToolsActivePort` 檔案解析 WebSocket URL。
+2. **建立連線**：使用原生 WebSocket 連接至 Chrome 的 CDP endpoint。
+3. **列出分頁**：取得所有開啟的分頁資訊。
+4. **附加目標**：附加到指定分頁並建立 session。
+5. **頁面導覽**：導航至目標網站（預設為 YouTube）。
+6. **執行指令**：使用 CDP 指令獲取頁面標題。
+7. **關閉連線**：關閉分頁並斷開 WebSocket 連線。
 
 ### 前置需求
 - **Chrome 瀏覽器**: 需為 **Version 146 或更高版本**。
@@ -38,13 +49,19 @@ A test project for automating Chrome browser using the **Chrome DevTools MCP (Mo
    ```
 2. 執行腳本：
    ```bash
+   # 使用 MCP 協議
    python youtube_mcp_control.py
+   
+   # 使用純 CDP WebSocket
+   python cdp_connect_existing.py
    ```
 
 ---
 
 ### Overview
-This project demonstrates how to interact with Chrome DevTools via the MCP protocol for browser automation. It currently includes `youtube_mcp_control.py`, which navigates to YouTube and analyzes video titles.
+This project demonstrates how to interact with Chrome DevTools via the MCP protocol for browser automation. It includes the following scripts:
+- **`youtube_mcp_control.py`**: Uses the MCP protocol to navigate to YouTube and analyze video titles
+- **`cdp_connect_existing.py`**: Pure CDP WebSocket connection without relying on MCP server
 
 > [!NOTE]
 > This is a pure script-based automation demo and **does not require an AI model or AI agent** to function.
@@ -57,6 +74,15 @@ This project demonstrates how to interact with Chrome DevTools via the MCP proto
 5. **Parsing**: Uses `BeautifulSoup` to parse the retrieved HTML.
 6. **Title Extraction**: Selects and extracts video titles from the homepage video list.
 7. **Console Output**: Lists the extracted titles in the console for verification.
+
+**`cdp_connect_existing.py` Demonstration Workflow:**
+1. **Read Connection Info**: Parses WebSocket URL from Chrome's `DevToolsActivePort` file.
+2. **Establish Connection**: Uses native WebSocket to connect to Chrome's CDP endpoint.
+3. **List Tabs**: Retrieves information about all open tabs.
+4. **Attach Target**: Attaches to a specific tab and creates a session.
+5. **Page Navigation**: Navigates to the target website (default: YouTube).
+6. **Execute Commands**: Uses CDP commands to retrieve page titles.
+7. **Close Connection**: Closes the tab and disconnects the WebSocket connection.
 
 ### Prerequisites
 - **Chrome Browser**: **Version 146 or higher** is required.
@@ -77,7 +103,11 @@ Based on the [Chrome Developer Blog](https://developer.chrome.com/blog/chrome-de
    ```
 2. Run the script:
    ```bash
+   # Using MCP protocol
    python youtube_mcp_control.py
+   
+   # Using pure CDP WebSocket
+   python cdp_connect_existing.py
    ```
 
 ---
